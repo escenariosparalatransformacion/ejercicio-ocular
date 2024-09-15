@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terapia de Movimiento Ocular</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f4f8;
+        }
+        .contenedor {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .icono {
+            font-size: 48px;
+            margin: 20px 0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .explicacion {
+            background-color: #e7f3fe;
+            border-left: 5px solid #2196F3;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        #fotoPersonal {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+        .navegacion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .flecha {
+            font-size: 24px;
+            background-color: #2196F3;
+            color: white;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .flecha:hover {
+            background-color: #0b7dda;
+        }
+        .progreso {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Terapia de Movimiento Ocular</h1>
+        
+        <div id="icono" class="icono">👁️</div>
+        
+        <h2 id="instruccion">Centramiento: Mira tu tercer ojo</h2>
+        
+        <p id="frase">Elijo ver</p>
+        
+        <div class="explicacion">
+            <h3>Explicación del ejercicio:</h3>
+            <p id="explicacionEjercicio">
+                Este ejercicio de centramiento te ayuda a enfocarte en el presente y conectar con tu intuición. Mirar hacia el tercer ojo promueve la concentración y la calma mental.
+            </p>
+            <h3>¿Por qué esta frase?</h3>
+            <p id="explicacionFrase">
+                "Elijo ver" es una afirmación poderosa que te ayuda a abrir tu percepción y estar más consciente de tu realidad. Te invita a tomar una postura activa en tu proceso de autoconocimiento.
+            </p>
+        </div>
+        
+        <p id="repeticiones">Repeticiones restantes: 3</p>
+        
+        <button id="botonNarrador">Leer frase en voz alta</button>
+        
+        <div class="navegacion">
+            <div id="flechaAtras" class="flecha">←</div>
+            <div id="progreso" class="progreso">1 / 9</div>
+            <div id="flechaAdelante" class="flecha">→</div>
+        </div>
+        
+        <h3>Foto personal para el ejercicio final:</h3>
+        <input type="file" id="inputFoto" accept="image/*">
+        <img id="fotoPersonal" src="" alt="Tu foto personal" style="display: none;">
+    </div>
+
+    <script>
+        const ejercicios = [
+            { icono: '👁️', instruccion: 'Centramiento: Mira tu tercer ojo', frase: 'Elijo ver' },
+            { icono: '⬆️', instruccion: 'Mira Arriba', frase: 'Abandono todas las creencias limitantes de mi mente' },
+            { icono: '⬇️', instruccion: 'Mira Abajo', frase: 'Abandono mi mirada hacia los muertos' },
+            { icono: '⬅️', instruccion: 'Mira a la Izquierda', frase: 'Abandono toda lealtad a mi madre y ancestras' },
+            { icono: '➡️', instruccion: 'Mira a la Derecha', frase: 'Abandono toda lealtad a mi padre y ancestros' },
+            { icono: '↪️', instruccion: 'Gira los Ojos a la Izquierda', frase: 'Cierro todas las relaciones del pasado' },
+            { icono: '↩️', instruccion: 'Gira los Ojos a la Derecha', frase: 'Abro todos los caminos para mi evolución' },
+            { icono: '👀', instruccion: 'Parpadea', frase: 'Vuelvo a mi madre. Vuelvo a mi padre' },
+            { icono: '📷', instruccion: 'Mira tu foto', frase: 'Elijo ser adulto' }
+        ];
+
+        let ejercicioActual = 0;
+        let repeticiones = 3;
+
+        function actualizarEjercicio() {
+            document.getElementById('icono').textContent = ejercicios[ejercicioActual].icono;
+            document.getElementById('instruccion').textContent = ejercicios[ejercicioActual].instruccion;
+            document.getElementById('frase').textContent = ejercicios[ejercicioActual].frase;
+            document.getElementById('repeticiones').textContent = `Repeticiones restantes: ${repeticiones}`;
+            document.getElementById('progreso').textContent = `${ejercicioActual + 1} / ${ejercicios.length}`;
+
+            // Aquí puedes añadir lógica para actualizar las explicaciones
+        }
+
+        document.getElementById('flechaAtras').addEventListener('click', () => {
+            if (ejercicioActual > 0) {
+                ejercicioActual--;
+                repeticiones = 3;
+                actualizarEjercicio();
+            }
+        });
+
+        document.getElementById('flechaAdelante').addEventListener('click', () => {
+            if (repeticiones > 1) {
+                repeticiones--;
+            } else {
+                ejercicioActual = (ejercicioActual + 1) % ejercicios.length;
+                repeticiones = 3;
+            }
+            actualizarEjercicio();
+        });
+
+        document.getElementById('inputFoto').addEventListener('change', function(event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var img = document.getElementById('fotoPersonal');
+                img.src = e.target.result;
+                img.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('botonNarrador').addEventListener('click', function() {
+            var frase = document.getElementById('frase').textContent;
+            var utterance = new SpeechSynthesisUtterance(frase);
+            utterance.lang = 'es-ES';
+            speechSynthesis.speak(utterance);
+        });
+
+        actualizarEjercicio();
+    </script>
+</body>
+</html>
